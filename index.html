@@ -401,11 +401,10 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Part-2:-Classification-trees">Part 2: Classification trees<a class="anchor-link" href="#Part-2:-Classification-trees">&#182;</a></h1><p><strong>Example:</strong> Predict whether Barack Obama or Hillary Clinton will win the Democratic primary in a particular county in 2008:</p>
-
+<h1 id="Part-2:-Classification-trees">Part 2: Classification trees<a class="anchor-link" href="#Part-2:-Classification-trees">&#182;</a></h1>
 </div>
 </div>
-</div></section></section><section><section>
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -421,7 +420,7 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Decision-Tree-with-Scikit-Learn">Decision Tree with Scikit Learn<a class="anchor-link" href="#Decision-Tree-with-Scikit-Learn">&#182;</a></h1><h3 id="Titanic-Dataset">Titanic Dataset<a class="anchor-link" href="#Titanic-Dataset">&#182;</a></h3><ul>
+<h2 id="Titanic-Dataset">Titanic Dataset<a class="anchor-link" href="#Titanic-Dataset">&#182;</a></h2><ul>
 <li>Problem: Predict whether a passenger survived, given other attributes</li>
 </ul>
 
@@ -430,13 +429,13 @@ a.anchor-link {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c1"># read in the data</span>
 <span class="n">titanic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://sampathweb.github.io/datasets/titanic/titanic.csv&#39;</span><span class="p">)</span>
 <span class="n">titanic</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;ticket&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">titanic</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">titanic</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -447,7 +446,7 @@ a.anchor-link {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[29]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[42]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -527,66 +526,6 @@ a.anchor-link {
       <td>NaN</td>
       <td>S</td>
     </tr>
-    <tr>
-      <th>5</th>
-      <td>0</td>
-      <td>3</td>
-      <td>male</td>
-      <td>NaN</td>
-      <td>0</td>
-      <td>0</td>
-      <td>8.46</td>
-      <td>NaN</td>
-      <td>Q</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>0</td>
-      <td>1</td>
-      <td>male</td>
-      <td>54</td>
-      <td>0</td>
-      <td>0</td>
-      <td>51.86</td>
-      <td>E46</td>
-      <td>S</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>0</td>
-      <td>3</td>
-      <td>male</td>
-      <td>2</td>
-      <td>3</td>
-      <td>1</td>
-      <td>21.07</td>
-      <td>NaN</td>
-      <td>S</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>1</td>
-      <td>3</td>
-      <td>female</td>
-      <td>27</td>
-      <td>0</td>
-      <td>2</td>
-      <td>11.13</td>
-      <td>NaN</td>
-      <td>S</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>1</td>
-      <td>2</td>
-      <td>female</td>
-      <td>14</td>
-      <td>1</td>
-      <td>0</td>
-      <td>30.07</td>
-      <td>NaN</td>
-      <td>C</td>
-    </tr>
   </tbody>
 </table>
 </div>
@@ -600,7 +539,7 @@ a.anchor-link {
 </div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c1"># How many Survived?</span>
@@ -643,12 +582,12 @@ Probability of Survival: 0.383838383838
 </div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c1"># Can I do better - If I know the Class they travelled in?</span>
 
-<span class="n">titanic</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;pclass&#39;</span><span class="p">)[[</span><span class="s1">&#39;survived&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">])</span>
+<span class="n">titanic</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;pclass&#39;</span><span class="p">)[[</span><span class="s1">&#39;survived&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">])</span>
 </pre></div>
 
 </div>
@@ -659,7 +598,7 @@ Probability of Survival: 0.383838383838
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[32]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[46]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -667,18 +606,14 @@ Probability of Survival: 0.383838383838
   <thead>
     <tr>
       <th></th>
-      <th colspan="3" halign="left">survived</th>
+      <th>survived</th>
     </tr>
     <tr>
       <th></th>
       <th>mean</th>
-      <th>sum</th>
-      <th>count</th>
     </tr>
     <tr>
       <th>pclass</th>
-      <th></th>
-      <th></th>
       <th></th>
     </tr>
   </thead>
@@ -686,20 +621,14 @@ Probability of Survival: 0.383838383838
     <tr>
       <th>1</th>
       <td>0.63</td>
-      <td>136</td>
-      <td>216</td>
     </tr>
     <tr>
       <th>2</th>
       <td>0.47</td>
-      <td>87</td>
-      <td>184</td>
     </tr>
     <tr>
       <th>3</th>
       <td>0.24</td>
-      <td>119</td>
-      <td>491</td>
     </tr>
   </tbody>
 </table>
@@ -724,10 +653,10 @@ Probability of Survival: 0.383838383838
 </div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">titanic</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;sex&#39;</span><span class="p">)[[</span><span class="s1">&#39;survived&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython2"><pre><span class="n">titanic</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;sex&#39;</span><span class="p">)[[</span><span class="s1">&#39;survived&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">])</span>
 </pre></div>
 
 </div>
@@ -738,7 +667,7 @@ Probability of Survival: 0.383838383838
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[33]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[47]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -746,18 +675,14 @@ Probability of Survival: 0.383838383838
   <thead>
     <tr>
       <th></th>
-      <th colspan="3" halign="left">survived</th>
+      <th>survived</th>
     </tr>
     <tr>
       <th></th>
       <th>mean</th>
-      <th>sum</th>
-      <th>count</th>
     </tr>
     <tr>
       <th>sex</th>
-      <th></th>
-      <th></th>
       <th></th>
     </tr>
   </thead>
@@ -765,14 +690,10 @@ Probability of Survival: 0.383838383838
     <tr>
       <th>female</th>
       <td>0.74</td>
-      <td>233</td>
-      <td>314</td>
     </tr>
     <tr>
       <th>male</th>
       <td>0.19</td>
-      <td>109</td>
-      <td>577</td>
     </tr>
   </tbody>
 </table>
@@ -784,6 +705,16 @@ Probability of Survival: 0.383838383838
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="Images/titanic-decision-tree-hand.png" alt="Titanic Decision Tree"></p>
+
+</div>
+</div>
 </div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -860,7 +791,7 @@ Let's choose our response and a few features, and decide whether we need to adju
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="prompt input_prompt">In&nbsp;[53]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c1"># encode sex feature</span>
@@ -888,7 +819,7 @@ Let's choose our response and a few features, and decide whether we need to adju
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="prompt input_prompt">In&nbsp;[54]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">y_data</span> <span class="o">=</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;survived&#39;</span><span class="p">]</span>
@@ -906,7 +837,7 @@ Let's choose our response and a few features, and decide whether we need to adju
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[40]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[54]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -996,7 +927,7 @@ Let's choose our response and a few features, and decide whether we need to adju
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="prompt input_prompt">In&nbsp;[55]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">train_test_split</span>
@@ -1021,7 +952,7 @@ Let's choose our response and a few features, and decide whether we need to adju
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="prompt input_prompt">In&nbsp;[56]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">tree</span>
@@ -1047,7 +978,7 @@ Let's choose our response and a few features, and decide whether we need to adju
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="prompt input_prompt">In&nbsp;[60]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">pydot</span>
@@ -1069,7 +1000,7 @@ Let's choose our response and a few features, and decide whether we need to adju
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[46]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[60]:</div>
 
 
 <div class="output_png output_subarea output_execute_result">
@@ -2660,11 +2591,11 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
 </div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[47]:</div>
+<div class="prompt input_prompt">In&nbsp;[61]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c1"># compute the feature importances</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;feature&#39;</span><span class="p">:</span><span class="n">feature_cols</span><span class="p">,</span> <span class="s1">&#39;importance&#39;</span><span class="p">:</span><span class="n">clf</span><span class="o">.</span><span class="n">feature_importances_</span><span class="p">})</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;feature&#39;</span><span class="p">:</span><span class="n">feature_cols</span><span class="p">,</span> <span class="s1">&#39;importance&#39;</span><span class="p">:</span><span class="n">clf</span><span class="o">.</span><span class="n">feature_importances_</span><span class="p">})</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;importance&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -2675,7 +2606,7 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[47]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[61]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -2689,14 +2620,19 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
   </thead>
   <tbody>
     <tr>
+      <th>1</th>
+      <td>sex</td>
+      <td>0.62</td>
+    </tr>
+    <tr>
       <th>0</th>
       <td>pclass</td>
       <td>0.21</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>sex</td>
-      <td>0.62</td>
+      <th>3</th>
+      <td>sibsp</td>
+      <td>0.06</td>
     </tr>
     <tr>
       <th>2</th>
@@ -2704,9 +2640,9 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
       <td>0.06</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>sibsp</td>
-      <td>0.06</td>
+      <th>6</th>
+      <td>embarked_S</td>
+      <td>0.05</td>
     </tr>
     <tr>
       <th>4</th>
@@ -2717,11 +2653,6 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
       <th>5</th>
       <td>embarked_Q</td>
       <td>0.00</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>embarked_S</td>
-      <td>0.05</td>
     </tr>
   </tbody>
 </table>
@@ -2736,7 +2667,7 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[48]:</div>
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c1"># Overall Accuracy of the model</span>
@@ -2751,7 +2682,7 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[48]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[62]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -2766,7 +2697,7 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
 </div></div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="prompt input_prompt">In&nbsp;[64]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">confusion_matrix_df</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
@@ -2796,7 +2727,7 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[50]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[64]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -2837,7 +2768,7 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
