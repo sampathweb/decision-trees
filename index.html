@@ -396,22 +396,25 @@ a.anchor-link {
 </div>
 </div>
 </div></section></section><section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c1">## Questions?</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Part-2:-Classification-trees">Part 2: Classification trees<a class="anchor-link" href="#Part-2:-Classification-trees">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="Images/obama_clinton_tree.jpg" alt="Obama-Clinton decision tree"></p>
-
 </div>
 </div>
 </div></section></section><section><section>
@@ -705,7 +708,7 @@ Probability of Survival: 0.383838383838
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -744,7 +747,7 @@ $$1 - \left(\frac {Survived} {Total}\right)^2 - \left(\frac {Not Survived} {Tota
 
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -755,58 +758,6 @@ $$\text{Males: } 1 - \left(\frac {109} {577}\right)^2 - \left(\frac {468} {577}\
 
 </div>
 </div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Prediction-Problem">Prediction Problem<a class="anchor-link" href="#Prediction-Problem">&#182;</a></h3><p>Predict who survived - This is our response, and is already encoded as 0=died and 1=survived.</p>
-<h3 id="Identify-Features-we-want-in-our-Model">Identify Features we want in our Model<a class="anchor-link" href="#Identify-Features-we-want-in-our-Model">&#182;</a></h3><ul>
-<li>Pclass - These are the passenger class categories (1=first class, 2=second class, 3=third class). They are ordered, so we'll leave them as-is.</li>
-<li>Sex -  This is a binary category, so we should encode as 0=female and 1=male.</li>
-<li>Age - We need to fill in the missing values.</li>
-<li>Sibling Count</li>
-<li><p>embarked - This is the port they emarked from. There are three unordered categories, so we'll create dummy variables.
-Let's choose our response and a few features, and decide whether we need to adjust them:</p>
-</li>
-<li><p><strong>pclass:</strong> These are the passenger class categories (1=first class, 2=second class, 3=third class). They are ordered, so we'll leave them as-is.</p>
-</li>
-<li><strong>sex:</strong> This is a binary category, so we should encode as 0=female and 1=male.</li>
-<li><strong>age:</strong> We need to fill in the missing values.</li>
-<li><strong>embarked:</strong> This is the port they emarked from. There are three unordered categories, so we'll create dummy variables.</li>
-</ul>
-
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Imputing-Values">Imputing Values<a class="anchor-link" href="#Imputing-Values">&#182;</a></h4>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[53]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c1"># encode sex feature</span>
-<span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">titanic</span><span class="o">.</span><span class="n">sex</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;female&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
-
-<span class="c1"># fill in missing values for age</span>
-<span class="n">titanic</span><span class="o">.</span><span class="n">age</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">titanic</span><span class="o">.</span><span class="n">age</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
-<span class="c1"># Challenge: Populate the missing Age from a Normal Distribution centered on Average Age and Standard Deviation</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -2695,6 +2646,19 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
 </div>
 
 </div></div></section></section><section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c1">## Questions?</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[64]:</div>
