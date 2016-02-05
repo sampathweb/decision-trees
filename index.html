@@ -252,26 +252,10 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction-to-Decision-Trees">Introduction to Decision Trees<a class="anchor-link" href="#Introduction-to-Decision-Trees">&#182;</a></h1><ul>
-<li>Adapted from Chapter 8 of <a href="http://www-bcf.usc.edu/~gareth/ISL/">An Introduction to Statistical Learning</a>*</li>
-<li>GA Data Science from NY and Washington DC</li>
-</ul>
-
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Why are we learning about decision trees?</p>
+<h1 id="Introduction-to-Decision-Trees">Introduction to Decision Trees<a class="anchor-link" href="#Introduction-to-Decision-Trees">&#182;</a></h1><p>Adapted from -</p>
 <ul>
-<li>Can be applied to both regression and classification problems</li>
-<li>Many useful properties</li>
-<li>Very popular</li>
-<li>Basis for more sophisticated models</li>
-<li>Have a different way of "thinking" than the other models we have studied</li>
+<li>Chapter 8 of <a href="http://www-bcf.usc.edu/~gareth/ISL/">An Introduction to Statistical Learning</a>*</li>
+<li>GA Data Science from NY and Washington DC</li>
 </ul>
 
 </div>
@@ -376,6 +360,17 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="Images/salary_tree.png" alt="Salary tree"></p>
+<p>The first split is <strong>Years &lt; 4.5</strong>, thus that split goes at the top of the tree. When a splitting rule is <strong>True</strong>, you follow the left branch. When a splitting rule is <strong>False</strong>, you follow the right branch.</p>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Rules-for-segmenting:">Rules for segmenting:<a class="anchor-link" href="#Rules-for-segmenting:">&#182;</a></h2><ul>
 <li>You can only use <strong>straight lines</strong>, drawn one at a time.</li>
 <li>Your line must either be <strong>vertical or horizontal</strong>.</li>
@@ -390,24 +385,9 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="Images/salary_tree.png" alt="Salary tree"></p>
-<p>The first split is <strong>Years &lt; 4.5</strong>, thus that split goes at the top of the tree. When a splitting rule is <strong>True</strong>, you follow the left branch. When a splitting rule is <strong>False</strong>, you follow the right branch.</p>
-
+<h2 id="Questions?">Questions?<a class="anchor-link" href="#Questions?">&#182;</a></h2>
 </div>
 </div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[67]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c1">## Questions?</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -2615,10 +2595,10 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
 </div>
 </div>
 
-</div><div class="fragment">
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[62]:</div>
+<div class="prompt input_prompt">In&nbsp;[68]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c1"># Overall Accuracy of the model</span>
@@ -2633,7 +2613,7 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[62]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[68]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -2645,20 +2625,16 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
 </div>
 </div>
 
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c1">## Questions?</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Metrics---Confusion-Matrix">Metrics - Confusion Matrix<a class="anchor-link" href="#Metrics---Confusion-Matrix">&#182;</a></h2>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[64]:</div>
@@ -2847,12 +2823,7 @@ o4YKvszZzEocCmZW4lAwsxKHgpmVOBTMrMShYGYl/w9CKZFLyVVC8gAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Prevent-Overfitting">Prevent Overfitting<a class="anchor-link" href="#Prevent-Overfitting">&#182;</a></h2><p>In addition to determining splits, we also need a stopping criterion to tell us when we’re done.</p>
-<p>For example, we can stop when all records belong to the same class, or when all records have the same attributes.
-This is correct in principle, but would likely lead to overfitting.</p>
-<p>Alternatively we could build the full tree, and then perform pruning as a post-processing step.
-To prune a tree, we examine the nodes from the bottom-up and simplify pieces of the tree (according to some criteria).</p>
-
+<h2 id="Questions?">Questions?<a class="anchor-link" href="#Questions?">&#182;</a></h2>
 </div>
 </div>
 </div></section></section><section><section>
@@ -2882,6 +2853,24 @@ To prune a tree, we examine the nodes from the bottom-up and simplify pieces of 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Disadvantages of decision trees:</strong></p>
+<ul>
+<li>Performance is (generally) not competitive with the best supervised learning methods</li>
+<li>Can easily overfit the training data (tuning is required)</li>
+<li>Small variations in the data can result in a completely different tree (high variance)</li>
+<li>Recursive binary splitting makes "locally optimal" decisions that may not result in a globally optimal tree</li>
+<li>Doesn't tend to work well if the classes are highly unbalanced</li>
+<li>Doesn't tend to work well with very small datasets</li>
+</ul>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="Images/tree_vs_linear.png" alt="Trees versus linear models"></p>
 
 </div>
@@ -2892,15 +2881,11 @@ To prune a tree, we examine the nodes from the bottom-up and simplify pieces of 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Disadvantages of decision trees:</strong></p>
-<ul>
-<li>Performance is (generally) not competitive with the best supervised learning methods</li>
-<li>Can easily overfit the training data (tuning is required)</li>
-<li>Small variations in the data can result in a completely different tree (high variance)</li>
-<li>Recursive binary splitting makes "locally optimal" decisions that may not result in a globally optimal tree</li>
-<li>Doesn't tend to work well if the classes are highly unbalanced</li>
-<li>Doesn't tend to work well with very small datasets</li>
-</ul>
+<h2 id="Prevent-Overfitting">Prevent Overfitting<a class="anchor-link" href="#Prevent-Overfitting">&#182;</a></h2><p>In addition to determining splits, we also need a stopping criterion to tell us when we’re done.</p>
+<p>For example, we can stop when all records belong to the same class, or when all records have the same attributes.
+This is correct in principle, but would likely lead to overfitting.</p>
+<p>Alternatively we could build the full tree, and then perform pruning as a post-processing step.
+To prune a tree, we examine the nodes from the bottom-up and simplify pieces of the tree (according to some criteria).</p>
 
 </div>
 </div>
@@ -2927,19 +2912,29 @@ To prune a tree, we examine the nodes from the bottom-up and simplify pieces of 
 <h4 id="It's-an-important-tool-in-the-Supervised-Learning-and-is-the-foundation-for-all-tree-based-models">It's an important tool in the Supervised Learning and is the foundation for all tree based models<a class="anchor-link" href="#It's-an-important-tool-in-the-Supervised-Learning-and-is-the-foundation-for-all-tree-based-models">&#182;</a></h4><h4 id="In-practice,-decision-trees-are-seldem-used-alone,-Instead-we-use-ensembles-to-improve-our-model">In practice, decision trees are seldem used alone, Instead we use ensembles to improve our model<a class="anchor-link" href="#In-practice,-decision-trees-are-seldem-used-alone,-Instead-we-use-ensembles-to-improve-our-model">&#182;</a></h4>
 </div>
 </div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre> 
-</pre></div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Resources">Resources<a class="anchor-link" href="#Resources">&#182;</a></h2><ul>
+<li>scikit-learn documentation: <a href="http://scikit-learn.org/stable/modules/tree.html">Decision Trees</a></li>
+<li>Wikipedia: <a href="http://en.wikipedia.org/wiki/Decision_tree">http://en.wikipedia.org/wiki/Decision_tree</a></li>
+</ul>
+<p>Note that there is not just one decision tree algorithm; instead, there are many variations. A few common decision tree algorithms that are often referred to by name are C4.5, C5.0, and CART. (More details are available in the <a href="http://scikit-learn.org/stable/modules/tree.html#tree-algorithms-id3-c4-5-c5-0-and-cart">scikit-learn documentation</a>.) scikit-learn uses an "optimized version" of CART.</p>
 
 </div>
 </div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
-
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Now,-your-Turn">Now, your Turn<a class="anchor-link" href="#Now,-your-Turn">&#182;</a></h2>
+</div>
+</div>
 </div></section></section>
 </div>
 </div>
