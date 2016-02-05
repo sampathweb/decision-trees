@@ -252,7 +252,38 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction-to-Decision-Trees">Introduction to Decision Trees<a class="anchor-link" href="#Introduction-to-Decision-Trees">&#182;</a></h1><table>
+<h1 id="Introduction-to-Decision-Trees">Introduction to Decision Trees<a class="anchor-link" href="#Introduction-to-Decision-Trees">&#182;</a></h1><ul>
+<li>Adapted from Chapter 8 of <a href="http://www-bcf.usc.edu/~gareth/ISL/">An Introduction to Statistical Learning</a>*</li>
+<li>GA Data Science from NY and Washington DC</li>
+</ul>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Why are we learning about decision trees?</p>
+<ul>
+<li>Can be applied to both regression and classification problems</li>
+<li>Many useful properties</li>
+<li>Very popular</li>
+<li>Basis for more sophisticated models</li>
+<li>Have a different way of "thinking" than the other models we have studied</li>
+</ul>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Decision tree</strong> classifiers are attractive models if we care about interpretability. Like the name decision tree suggests, we can think of this model as breaking down our data by making decisions based on asking a series of questions.</p>
+<table>
 <thead><tr>
 <th></th>
 <th>continuous</th>
@@ -275,36 +306,136 @@ a.anchor-link {
 
 </div>
 </div>
-</div><div class="fragment">
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Decision tree</strong> classifiers are attractive models if we care about interpretability. Like the name decision tree suggests, we can think of this model as breaking down our data by making decisions based on asking a series of questions.</p>
-
-</div>
-</div>
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Titanic-Dataset">Titanic Dataset<a class="anchor-link" href="#Titanic-Dataset">&#182;</a></h3><ul>
-<li>Problem: Predict whether a passenger survived, given other attributes</li>
+<h2 id="Lesson-objectives">Lesson objectives<a class="anchor-link" href="#Lesson-objectives">&#182;</a></h2><p>Students will be able to:</p>
+<ul>
+<li>Explain how a decision tree is created</li>
+<li>Build a decision tree model in scikit-learn</li>
+<li>Tune a decision tree model and explain how tuning impacts the model</li>
+<li>Interpret a tree diagram</li>
+<li>Describe the key differences between regression and classification trees</li>
+<li>Decide whether a decision tree is an appropriate model for a given problem</li>
 </ul>
 
 </div>
 </div>
 </div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Part-1:-Regression-trees">Part 1: Regression trees<a class="anchor-link" href="#Part-1:-Regression-trees">&#182;</a></h1><p>Major League Baseball player data from 1986-87:</p>
+<ul>
+<li><strong>Years</strong> (x-axis): number of years playing in the major leagues</li>
+<li><strong>Hits</strong> (y-axis): number of hits in the previous year</li>
+<li><strong>Salary</strong> (color): low salary is blue/green, high salary is red/yellow</li>
+</ul>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="Images/salary_color.png" alt="Salary data"></p>
+<ul>
+<li>The data above is our <strong>training data</strong>.</li>
+<li>We want to build a model that predicts the Salary of <strong>future players</strong> based on Years and Hits.</li>
+<li>We are going to "segment" the feature space into regions, and then use the <strong>mean Salary in each region</strong> as the predicted Salary for future players.</li>
+</ul>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="Images/salary_regions.png" alt="Salary regions"></p>
+<p>Above are the regions created by a computer:</p>
+<ul>
+<li>$R_1$: players with <strong>less than 5 years</strong> of experience, mean Salary of <strong>\$166,000 </strong></li>
+<li>$R_2$: players with <strong>5 or more years</strong> of experience and <strong>less than 118 hits</strong>, mean Salary of <strong>\$403,000 </strong></li>
+<li>$R_3$: players with <strong>5 or more years</strong> of experience and <strong>118 hits or more</strong>, mean Salary of <strong>\$846,000 </strong></li>
+</ul>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Rules-for-segmenting:">Rules for segmenting:<a class="anchor-link" href="#Rules-for-segmenting:">&#182;</a></h2><ul>
+<li>You can only use <strong>straight lines</strong>, drawn one at a time.</li>
+<li>Your line must either be <strong>vertical or horizontal</strong>.</li>
+<li>Your line <strong>stops</strong> when it hits an existing line.</li>
+</ul>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="Images/salary_tree.png" alt="Salary tree"></p>
+<p>The first split is <strong>Years &lt; 4.5</strong>, thus that split goes at the top of the tree. When a splitting rule is <strong>True</strong>, you follow the left branch. When a splitting rule is <strong>False</strong>, you follow the right branch.</p>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Part-2:-Classification-trees">Part 2: Classification trees<a class="anchor-link" href="#Part-2:-Classification-trees">&#182;</a></h1><p><strong>Example:</strong> Predict whether Barack Obama or Hillary Clinton will win the Democratic primary in a particular county in 2008:</p>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="Images/obama_clinton_tree.jpg" alt="Obama-Clinton decision tree"></p>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Decision-Tree-with-Scikit-Learn">Decision Tree with Scikit Learn<a class="anchor-link" href="#Decision-Tree-with-Scikit-Learn">&#182;</a></h1><h3 id="Titanic-Dataset">Titanic Dataset<a class="anchor-link" href="#Titanic-Dataset">&#182;</a></h3><ul>
+<li>Problem: Predict whether a passenger survived, given other attributes</li>
+</ul>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[66]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c1"># read in the data</span>
 <span class="n">titanic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://sampathweb.github.io/datasets/titanic/titanic.csv&#39;</span><span class="p">)</span>
+<span class="n">titanic</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;ticket&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="n">titanic</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
@@ -316,7 +447,7 @@ a.anchor-link {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[66]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[29]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -326,12 +457,10 @@ a.anchor-link {
       <th></th>
       <th>survived</th>
       <th>pclass</th>
-      <th>name</th>
       <th>sex</th>
       <th>age</th>
       <th>sibsp</th>
       <th>parch</th>
-      <th>ticket</th>
       <th>fare</th>
       <th>cabin</th>
       <th>embarked</th>
@@ -342,12 +471,10 @@ a.anchor-link {
       <th>0</th>
       <td>0</td>
       <td>3</td>
-      <td>Braund, Mr. Owen Harris</td>
       <td>male</td>
       <td>22</td>
       <td>1</td>
       <td>0</td>
-      <td>A/5 21171</td>
       <td>7.25</td>
       <td>NaN</td>
       <td>S</td>
@@ -356,12 +483,10 @@ a.anchor-link {
       <th>1</th>
       <td>1</td>
       <td>1</td>
-      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
       <td>female</td>
       <td>38</td>
       <td>1</td>
       <td>0</td>
-      <td>PC 17599</td>
       <td>71.28</td>
       <td>C85</td>
       <td>C</td>
@@ -370,12 +495,10 @@ a.anchor-link {
       <th>2</th>
       <td>1</td>
       <td>3</td>
-      <td>Heikkinen, Miss. Laina</td>
       <td>female</td>
       <td>26</td>
       <td>0</td>
       <td>0</td>
-      <td>STON/O2. 3101282</td>
       <td>7.92</td>
       <td>NaN</td>
       <td>S</td>
@@ -384,12 +507,10 @@ a.anchor-link {
       <th>3</th>
       <td>1</td>
       <td>1</td>
-      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
       <td>female</td>
       <td>35</td>
       <td>1</td>
       <td>0</td>
-      <td>113803</td>
       <td>53.10</td>
       <td>C123</td>
       <td>S</td>
@@ -398,12 +519,10 @@ a.anchor-link {
       <th>4</th>
       <td>0</td>
       <td>3</td>
-      <td>Allen, Mr. William Henry</td>
       <td>male</td>
       <td>35</td>
       <td>0</td>
       <td>0</td>
-      <td>373450</td>
       <td>8.05</td>
       <td>NaN</td>
       <td>S</td>
@@ -412,12 +531,10 @@ a.anchor-link {
       <th>5</th>
       <td>0</td>
       <td>3</td>
-      <td>Moran, Mr. James</td>
       <td>male</td>
       <td>NaN</td>
       <td>0</td>
       <td>0</td>
-      <td>330877</td>
       <td>8.46</td>
       <td>NaN</td>
       <td>Q</td>
@@ -426,12 +543,10 @@ a.anchor-link {
       <th>6</th>
       <td>0</td>
       <td>1</td>
-      <td>McCarthy, Mr. Timothy J</td>
       <td>male</td>
       <td>54</td>
       <td>0</td>
       <td>0</td>
-      <td>17463</td>
       <td>51.86</td>
       <td>E46</td>
       <td>S</td>
@@ -440,12 +555,10 @@ a.anchor-link {
       <th>7</th>
       <td>0</td>
       <td>3</td>
-      <td>Palsson, Master. Gosta Leonard</td>
       <td>male</td>
       <td>2</td>
       <td>3</td>
       <td>1</td>
-      <td>349909</td>
       <td>21.07</td>
       <td>NaN</td>
       <td>S</td>
@@ -454,12 +567,10 @@ a.anchor-link {
       <th>8</th>
       <td>1</td>
       <td>3</td>
-      <td>Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg)</td>
       <td>female</td>
       <td>27</td>
       <td>0</td>
       <td>2</td>
-      <td>347742</td>
       <td>11.13</td>
       <td>NaN</td>
       <td>S</td>
@@ -468,12 +579,10 @@ a.anchor-link {
       <th>9</th>
       <td>1</td>
       <td>2</td>
-      <td>Nasser, Mrs. Nicholas (Adele Achem)</td>
       <td>female</td>
       <td>14</td>
       <td>1</td>
       <td>0</td>
-      <td>237736</td>
       <td>30.07</td>
       <td>NaN</td>
       <td>C</td>
@@ -491,7 +600,7 @@ a.anchor-link {
 </div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[67]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c1"># How many Survived?</span>
@@ -521,7 +630,7 @@ Probability of Survival: 0.383838383838
 </div>
 </div>
 
-</div><div class="fragment">
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -531,15 +640,15 @@ Probability of Survival: 0.383838383838
 
 </div>
 </div>
-</div></div></section></section><section><section>
+</div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c1"># Can I do better - If I know the Class they travelled in?</span>
 
-<span class="n">titanic</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;pclass&#39;</span><span class="p">)[[</span><span class="s1">&#39;survived&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">titanic</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;pclass&#39;</span><span class="p">)[[</span><span class="s1">&#39;survived&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">])</span>
 </pre></div>
 
 </div>
@@ -550,18 +659,26 @@ Probability of Survival: 0.383838383838
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[68]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[32]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
 <table border="1" class="dataframe">
   <thead>
-    <tr style="text-align: right;">
+    <tr>
       <th></th>
-      <th>survived</th>
+      <th colspan="3" halign="left">survived</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>mean</th>
+      <th>sum</th>
+      <th>count</th>
     </tr>
     <tr>
       <th>pclass</th>
+      <th></th>
+      <th></th>
       <th></th>
     </tr>
   </thead>
@@ -569,14 +686,20 @@ Probability of Survival: 0.383838383838
     <tr>
       <th>1</th>
       <td>0.63</td>
+      <td>136</td>
+      <td>216</td>
     </tr>
     <tr>
       <th>2</th>
       <td>0.47</td>
+      <td>87</td>
+      <td>184</td>
     </tr>
     <tr>
       <th>3</th>
       <td>0.24</td>
+      <td>119</td>
+      <td>491</td>
     </tr>
   </tbody>
 </table>
@@ -588,7 +711,7 @@ Probability of Survival: 0.383838383838
 </div>
 </div>
 
-</div><div class="fragment">
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -598,13 +721,13 @@ Probability of Survival: 0.383838383838
 
 </div>
 </div>
-</div></div></section></section><section><section>
+</div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[69]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">titanic</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;sex&#39;</span><span class="p">)[[</span><span class="s1">&#39;survived&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span class="n">titanic</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;sex&#39;</span><span class="p">)[[</span><span class="s1">&#39;survived&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">])</span>
 </pre></div>
 
 </div>
@@ -615,18 +738,26 @@ Probability of Survival: 0.383838383838
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[69]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[33]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
 <table border="1" class="dataframe">
   <thead>
-    <tr style="text-align: right;">
+    <tr>
       <th></th>
-      <th>survived</th>
+      <th colspan="3" halign="left">survived</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>mean</th>
+      <th>sum</th>
+      <th>count</th>
     </tr>
     <tr>
       <th>sex</th>
+      <th></th>
+      <th></th>
       <th></th>
     </tr>
   </thead>
@@ -634,94 +765,14 @@ Probability of Survival: 0.383838383838
     <tr>
       <th>female</th>
       <td>0.74</td>
+      <td>233</td>
+      <td>314</td>
     </tr>
     <tr>
       <th>male</th>
       <td>0.19</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[70]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">titanic</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="s1">&#39;pclass&#39;</span><span class="p">])[[</span><span class="s1">&#39;survived&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[70]:</div>
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr>
-      <th></th>
-      <th></th>
-      <th colspan="2" halign="left">survived</th>
-    </tr>
-    <tr>
-      <th></th>
-      <th></th>
-      <th>mean</th>
-      <th>count</th>
-    </tr>
-    <tr>
-      <th>sex</th>
-      <th>pclass</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th rowspan="3" valign="top">female</th>
-      <th>1</th>
-      <td>0.97</td>
-      <td>94</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.92</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.50</td>
-      <td>144</td>
-    </tr>
-    <tr>
-      <th rowspan="3" valign="top">male</th>
-      <th>1</th>
-      <td>0.37</td>
-      <td>122</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.16</td>
-      <td>108</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.14</td>
-      <td>347</td>
+      <td>109</td>
+      <td>577</td>
     </tr>
   </tbody>
 </table>
@@ -739,46 +790,41 @@ Probability of Survival: 0.383838383838
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The Gini index is defined by K</p>
-$$Gini(t)=1-\sum\limits_{i=0}^{c} [p(i|t)]^2$$<p>G = 􏰀 pˆmk (1 − pˆmk ), k=1
-a measure of total variance across the K classes. The Gini index takes on a small value if all of the pˆmk’s are close to zero or one.
-• For this reason the Gini index is referred to as a measure of node purity — a small value indicates that a node contains predominantly observations from a single class.</p>
-
+<h2 id="Splitting-criteria-for-classification-trees">Splitting criteria for classification trees<a class="anchor-link" href="#Splitting-criteria-for-classification-trees">&#182;</a></h2><p>Common options for the splitting criteria:</p>
+<ul>
+<li><strong>classification error rate:</strong> fraction of training observations in a region that don't belong to the most common class</li>
+<li><strong>Gini index:</strong> measure of total variance across classes in a region</li>
+</ul>
+$$Gini(t)=1-\sum\limits_{i=0}^{c} [p(i|t)]^2$$
 </div>
 </div>
-</div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[87]:</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c1"># Gini Coefficient for Gender</span>
-
-<span class="n">gini_sex</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.74</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mf">0.19</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">gini_sex</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[87]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>0.4163</pre>
-</div>
-
-</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Example-of-Gini-index">Example of Gini index<a class="anchor-link" href="#Example-of-Gini-index">&#182;</a></h3><p>Calculate the Gini index before making a split:</p>
+$$1 - \left(\frac {Survived} {Total}\right)^2 - \left(\frac {Not Survived} {Total}\right)^2 = 1 - \left(\frac {342} {891}\right)^2 - \left(\frac {549} {891}\right)^2 = 0.48$$<ul>
+<li>The <strong>maximum value</strong> of the Gini index is 0.5, and occurs when the classes are perfectly balanced in a node.</li>
+<li>The <strong>minimum value</strong> of the Gini index is 0, and occurs when there is only one class represented in a node.</li>
+<li>A node with a lower Gini index is said to be more "pure".</li>
+</ul>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Evaluating the split on <strong>gender</strong> using Gini index:</p>
+$$\text{Males: } 1 - \left(\frac {109} {577}\right)^2 - \left(\frac {468} {577}\right)^2 = 0.306$$$$\text{Females: } 1 - \left(\frac {233} {314}\right)^2 - \left(\frac {81} {314}\right)^2 = 0.383$$$$\text{Weighted Average: } 0.306 \left(\frac {577} {891}\right) + 0.383 \left(\frac {314} {891}\right) = 0.33$$<p>Again, the decision tree algorithm will try <strong>every possible split</strong>, and will choose the split that <strong>reduces the Gini index (and thus increases the "node purity") the most.</strong></p>
 
-</div></div></section></section><section><section>
+</div>
+</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -808,30 +854,19 @@ Let's choose our response and a few features, and decide whether we need to adju
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Imputing-Values---AGE">Imputing Values - AGE<a class="anchor-link" href="#Imputing-Values---AGE">&#182;</a></h4>
+<h4 id="Imputing-Values">Imputing Values<a class="anchor-link" href="#Imputing-Values">&#182;</a></h4>
 </div>
 </div>
-</div><div class="fragment">
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c1"># encode sex feature</span>
 <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">titanic</span><span class="o">.</span><span class="n">sex</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;female&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
-</pre></div>
 
-</div>
-</div>
-</div>
-
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c1"># fill in missing values for age</span>
+<span class="c1"># fill in missing values for age</span>
 <span class="n">titanic</span><span class="o">.</span><span class="n">age</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">titanic</span><span class="o">.</span><span class="n">age</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
 <span class="c1"># Challenge: Populate the missing Age from a Normal Distribution centered on Average Age and Standard Deviation</span>
@@ -850,30 +885,17 @@ Let's choose our response and a few features, and decide whether we need to adju
 <h3 id="Feature-Selection">Feature Selection<a class="anchor-link" href="#Feature-Selection">&#182;</a></h3>
 </div>
 </div>
-</div></section></section><section><section>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">y_data</span> <span class="o">=</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;survived&#39;</span><span class="p">]</span>
 
 <span class="n">X_data</span> <span class="o">=</span> <span class="n">titanic</span><span class="p">[[</span><span class="s1">&#39;pclass&#39;</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;sibsp&#39;</span><span class="p">,</span> <span class="s1">&#39;embarked&#39;</span><span class="p">]]</span>
-<span class="n">X_data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">X_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">X_data</span><span class="p">)</span>
-<span class="n">X_data</span>
+<span class="n">X_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">X_data</span><span class="p">)</span>
+<span class="n">X_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -884,7 +906,7 @@ Let's choose our response and a few features, and decide whether we need to adju
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[20]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[40]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -906,7 +928,7 @@ Let's choose our response and a few features, and decide whether we need to adju
       <th>0</th>
       <td>3</td>
       <td>1</td>
-      <td>22.0</td>
+      <td>22</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
@@ -916,7 +938,7 @@ Let's choose our response and a few features, and decide whether we need to adju
       <th>1</th>
       <td>1</td>
       <td>0</td>
-      <td>38.0</td>
+      <td>38</td>
       <td>1</td>
       <td>1</td>
       <td>0</td>
@@ -926,7 +948,7 @@ Let's choose our response and a few features, and decide whether we need to adju
       <th>2</th>
       <td>3</td>
       <td>0</td>
-      <td>26.0</td>
+      <td>26</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -936,7 +958,7 @@ Let's choose our response and a few features, and decide whether we need to adju
       <th>3</th>
       <td>1</td>
       <td>0</td>
-      <td>35.0</td>
+      <td>35</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
@@ -946,175 +968,14 @@ Let's choose our response and a few features, and decide whether we need to adju
       <th>4</th>
       <td>3</td>
       <td>1</td>
-      <td>35.0</td>
+      <td>35</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>3</td>
-      <td>1</td>
-      <td>29.7</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>1</td>
-      <td>1</td>
-      <td>54.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>3</td>
-      <td>1</td>
-      <td>2.0</td>
-      <td>3</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>3</td>
-      <td>0</td>
-      <td>27.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>2</td>
-      <td>0</td>
-      <td>14.0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>881</th>
-      <td>3</td>
-      <td>1</td>
-      <td>33.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>882</th>
-      <td>3</td>
-      <td>0</td>
-      <td>22.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>883</th>
-      <td>2</td>
-      <td>1</td>
-      <td>28.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>884</th>
-      <td>3</td>
-      <td>1</td>
-      <td>25.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>885</th>
-      <td>3</td>
-      <td>0</td>
-      <td>39.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>886</th>
-      <td>2</td>
-      <td>1</td>
-      <td>27.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>887</th>
-      <td>1</td>
-      <td>0</td>
-      <td>19.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>888</th>
-      <td>3</td>
-      <td>0</td>
-      <td>29.7</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>889</th>
-      <td>1</td>
-      <td>1</td>
-      <td>26.0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>890</th>
-      <td>3</td>
-      <td>1</td>
-      <td>32.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
     </tr>
   </tbody>
 </table>
-<p>891 rows × 7 columns</p>
 </div>
 </div>
 
@@ -1132,10 +993,10 @@ Let's choose our response and a few features, and decide whether we need to adju
 <h3 id="Create-Train-/-Test-Split">Create Train / Test Split<a class="anchor-link" href="#Create-Train-/-Test-Split">&#182;</a></h3>
 </div>
 </div>
-</div></section></section><section><section>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">train_test_split</span>
@@ -1157,10 +1018,10 @@ Let's choose our response and a few features, and decide whether we need to adju
 
 </div>
 </div>
-</div></section></section><section><section>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[73]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">tree</span>
@@ -1174,17 +1035,7 @@ Let's choose our response and a few features, and decide whether we need to adju
 </div>
 </div>
 
-</div><div class="fragment">
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The decision tree we have built represents a series of decisions based on the training data. To classify an instance, we should answer the question at each node. For example, at our root node, the question is: Is sex&lt;=0.5? (are we talking about a woman?). If the answer is yes, you go to the left child node in the tree; otherwise you go to the right child node. You keep answering questions (was she in the third class?, was she in the first class?, and was she below 13 years old?), until you reach a leaf. When you are there, the prediction corresponds to the target class that has most instances (that is if the answers are given to the previous questions). In our case, if she was a woman from second class, the answer would be 1 (that is she survived), and so on. Let's drawit, using pyplot:</p>
-
-</div>
-</div>
-</div></div></section></section><section><section>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -1193,82 +1044,10 @@ Let's choose our response and a few features, and decide whether we need to adju
 <h3 id="Visualize-Tree-Model">Visualize Tree Model<a class="anchor-link" href="#Visualize-Tree-Model">&#182;</a></h3>
 </div>
 </div>
-</div><div class="fragment">
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[75]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">sklearn.externals.six</span> <span class="kn">import</span> <span class="n">StringIO</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;titanic_decision_tree.dot&quot;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">export_graphviz</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">out_file</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[76]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="o">!</span>cat titanic_decision_tree.dot
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>digraph Tree {
-node [shape=box] ;
-0 [label=&quot;X[1] &lt;= 0.5\ngini = 0.4659\nsamples = 712\nvalue = [449, 263]&quot;] ;
-1 [label=&quot;X[0] &lt;= 2.5\ngini = 0.3811\nsamples = 242\nvalue = [62, 180]&quot;] ;
-0 -&gt; 1 [labeldistance=2.5, labelangle=45, headlabel=&quot;True&quot;] ;
-2 [label=&quot;X[6] &lt;= 0.5\ngini = 0.1078\nsamples = 140\nvalue = [8, 132]&quot;] ;
-1 -&gt; 2 ;
-3 [label=&quot;gini = 0.0\nsamples = 44\nvalue = [0, 44]&quot;] ;
-2 -&gt; 3 ;
-4 [label=&quot;gini = 0.1528\nsamples = 96\nvalue = [8, 88]&quot;] ;
-2 -&gt; 4 ;
-5 [label=&quot;X[6] &lt;= 0.5\ngini = 0.4983\nsamples = 102\nvalue = [54, 48]&quot;] ;
-1 -&gt; 5 ;
-6 [label=&quot;gini = 0.414\nsamples = 41\nvalue = [12, 29]&quot;] ;
-5 -&gt; 6 ;
-7 [label=&quot;gini = 0.4289\nsamples = 61\nvalue = [42, 19]&quot;] ;
-5 -&gt; 7 ;
-8 [label=&quot;X[2] &lt;= 13.0\ngini = 0.2908\nsamples = 470\nvalue = [387, 83]&quot;] ;
-0 -&gt; 8 [labeldistance=2.5, labelangle=-45, headlabel=&quot;False&quot;] ;
-9 [label=&quot;X[3] &lt;= 2.5\ngini = 0.4898\nsamples = 28\nvalue = [12, 16]&quot;] ;
-8 -&gt; 9 ;
-10 [label=&quot;gini = 0.1172\nsamples = 16\nvalue = [1, 15]&quot;] ;
-9 -&gt; 10 ;
-11 [label=&quot;gini = 0.1528\nsamples = 12\nvalue = [11, 1]&quot;] ;
-9 -&gt; 11 ;
-12 [label=&quot;X[0] &lt;= 1.5\ngini = 0.2572\nsamples = 442\nvalue = [375, 67]&quot;] ;
-8 -&gt; 12 ;
-13 [label=&quot;gini = 0.4514\nsamples = 93\nvalue = [61, 32]&quot;] ;
-12 -&gt; 13 ;
-14 [label=&quot;gini = 0.1805\nsamples = 349\nvalue = [314, 35]&quot;] ;
-12 -&gt; 14 ;
-}</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[77]:</div>
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">pydot</span>
@@ -1278,8 +1057,8 @@ node [shape=box] ;
 <span class="n">feature_names</span> <span class="o">=</span> <span class="n">X_data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 <span class="n">tree</span><span class="o">.</span><span class="n">export_graphviz</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">out_file</span><span class="o">=</span><span class="n">dot_data</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span> 
 <span class="n">graph</span> <span class="o">=</span> <span class="n">pydot</span><span class="o">.</span><span class="n">graph_from_dot_data</span><span class="p">(</span><span class="n">dot_data</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span> 
-<span class="n">graph</span><span class="o">.</span><span class="n">write_png</span><span class="p">(</span><span class="s1">&#39;titanic_decision_tree.png&#39;</span><span class="p">)</span> 
-<span class="n">Image</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;titanic_decision_tree.png&#39;</span><span class="p">)</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">write_png</span><span class="p">(</span><span class="s1">&#39;Images/titanic_decision_tree.png&#39;</span><span class="p">)</span> 
+<span class="n">Image</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;Images/titanic_decision_tree.png&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1290,7 +1069,7 @@ node [shape=box] ;
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[77]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[46]:</div>
 
 
 <div class="output_png output_subarea output_execute_result">
@@ -2878,10 +2657,86 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
 </div>
 </div>
 
+</div></section></section><section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c1"># compute the feature importances</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;feature&#39;</span><span class="p">:</span><span class="n">feature_cols</span><span class="p">,</span> <span class="s1">&#39;importance&#39;</span><span class="p">:</span><span class="n">clf</span><span class="o">.</span><span class="n">feature_importances_</span><span class="p">})</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[47]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feature</th>
+      <th>importance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>pclass</td>
+      <td>0.21</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>sex</td>
+      <td>0.62</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>age</td>
+      <td>0.06</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>sibsp</td>
+      <td>0.06</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>embarked_C</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>embarked_Q</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>embarked_S</td>
+      <td>0.05</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[80]:</div>
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c1"># Overall Accuracy of the model</span>
@@ -2896,7 +2751,7 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[80]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[48]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -2911,7 +2766,7 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
 </div></div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">confusion_matrix_df</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
@@ -2936,12 +2791,12 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>error rate: 0.26
+<pre>error rate: 0.23
 </pre>
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[29]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[50]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <div>
@@ -2961,8 +2816,8 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
   <tbody>
     <tr>
       <th>0</th>
-      <td>88</td>
-      <td>12</td>
+      <td>94</td>
+      <td>6</td>
     </tr>
     <tr>
       <th>1</th>
@@ -2979,28 +2834,10 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
 </div>
 </div>
 
-</div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">plot_confusion_matrix</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span>
-               <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">binary</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;true value&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;predicted value&#39;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
@@ -3018,108 +2855,88 @@ QU/PCgEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIgRki8H//CnTkNJF46AAAAABJRU5ErkJggg==
 
 
 <div class="output_png output_subarea ">
-<img src="data:image/png;base64,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
+<img src="data:image/png;base64,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
 "
 >
 </div>
@@ -3149,6 +2966,55 @@ To prune a tree, we examine the nodes from the bottom-up and simplify pieces of 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Part-3:-Comparing-decision-trees-with-other-models">Part 3: Comparing decision trees with other models<a class="anchor-link" href="#Part-3:-Comparing-decision-trees-with-other-models">&#182;</a></h1><p><strong>Advantages of decision trees:</strong></p>
+<ul>
+<li>Can be used for regression or classification</li>
+<li>Can be displayed graphically</li>
+<li>Highly interpretable</li>
+<li>Can be specified as a series of rules, and more closely approximate human decision-making than other models</li>
+<li>Prediction is fast</li>
+<li>Features don't need scaling</li>
+<li>Automatically learns feature interactions</li>
+<li>Tends to ignore irrelevant features</li>
+<li>Non-parametric (will outperform linear models if relationship between features and response is highly non-linear)</li>
+</ul>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="Images/tree_vs_linear.png" alt="Trees versus linear models"></p>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Disadvantages of decision trees:</strong></p>
+<ul>
+<li>Performance is (generally) not competitive with the best supervised learning methods</li>
+<li>Can easily overfit the training data (tuning is required)</li>
+<li>Small variations in the data can result in a completely different tree (high variance)</li>
+<li>Recursive binary splitting makes "locally optimal" decisions that may not result in a globally optimal tree</li>
+<li>Doesn't tend to work well if the classes are highly unbalanced</li>
+<li>Doesn't tend to work well with very small datasets</li>
+</ul>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Review">Review<a class="anchor-link" href="#Review">&#182;</a></h2><ul>
 <li>A decision tree is complete when all results can belong to a single partition</li>
 <li>To prevent overfitting, we prune trees after compleition</li>
@@ -3160,27 +3026,10 @@ To prune a tree, we examine the nodes from the bottom-up and simplify pieces of 
 <li>Data is Dirty or Missing - Pour data without cleaning</li>
 </ul>
 <h3 id="When-not-to-use-them:">When not to use them:<a class="anchor-link" href="#When-not-to-use-them:">&#182;</a></h3><ul>
-<li>Not good for small datasets - high noise to signal</li>
+<li>Not good for small datasets</li>
 <li>When there exists a linear relationship between Features and the Predicted outcome</li>
 </ul>
-<p>** It's an important tool in the Supervised Learning and is the foundation for much more complex</p>
-<h3 id="In-practice,-decision-trees-are-seldem-used-alone">In practice, decision trees are seldem used alone<a class="anchor-link" href="#In-practice,-decision-trees-are-seldem-used-alone">&#182;</a></h3><h3 id="Instead-we-use-ensembles-to-improve-our-model">Instead we use ensembles to improve our model<a class="anchor-link" href="#Instead-we-use-ensembles-to-improve-our-model">&#182;</a></h3>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Exercise:-Submit-to-Kaggle">Exercise: Submit to Kaggle<a class="anchor-link" href="#Exercise:-Submit-to-Kaggle">&#182;</a></h3><ul>
-<li>Get the NEW Data from Kaggle that we need to Predict</li>
-<li>Impute the same way we did the Training Data</li>
-<li>Make Prediction using the same Classifer Object</li>
-<li>Build a CSV and upload to Kaggle</li>
-<li>Check the Leaderboard and Tweet yay!</li>
-</ul>
-
+<h4 id="It's-an-important-tool-in-the-Supervised-Learning-and-is-the-foundation-for-all-tree-based-models">It's an important tool in the Supervised Learning and is the foundation for all tree based models<a class="anchor-link" href="#It's-an-important-tool-in-the-Supervised-Learning-and-is-the-foundation-for-all-tree-based-models">&#182;</a></h4><h4 id="In-practice,-decision-trees-are-seldem-used-alone,-Instead-we-use-ensembles-to-improve-our-model">In practice, decision trees are seldem used alone, Instead we use ensembles to improve our model<a class="anchor-link" href="#In-practice,-decision-trees-are-seldem-used-alone,-Instead-we-use-ensembles-to-improve-our-model">&#182;</a></h4>
 </div>
 </div>
 </div>
